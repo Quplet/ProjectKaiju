@@ -41,3 +41,9 @@ func pop_menu():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
+
+func _on_options_button_pressed():
+	push_menu("OptionsMenu")
+
+func _on_back_button_pressed():
+	pop_menu()

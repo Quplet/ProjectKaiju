@@ -1,12 +1,90 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbljuasuki7pu"]
+[gd_scene load_steps=3 format=3 uid="uid://dbljuasuki7pu"]
 
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_62db1"]
+[ext_resource type="Texture2D" uid="uid://dh4q7gt6suex0" path="res://assets/misc/title.png" id="2_r04io"]
 
 [node name="HUD" type="Node"]
 script = ExtResource("1_62db1")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
 
-[node name="OptionMenu" type="CanvasLayer" parent="."]
+[node name="Title" type="TextureRect" parent="MainMenu"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_top = 20.0
+offset_right = 256.0
+offset_bottom = 263.0
+grow_horizontal = 2
+texture = ExtResource("2_r04io")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PlayButton" type="Button" parent="MainMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 26.0
+offset_right = 100.0
+offset_bottom = 101.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="MainMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 126.0
+offset_right = 100.0
+offset_bottom = 201.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Options"
+
+[node name="OptionsMenu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Title" type="Label" parent="OptionsMenu"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -95.5
+offset_top = 20.0
+offset_right = 95.5
+offset_bottom = 92.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Options"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="OptionsMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -75.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "Back
+"
 
 [node name="GameHUD" type="CanvasLayer" parent="."]
+visible = false
+
+[connection signal="pressed" from="MainMenu/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="OptionsMenu/BackButton" to="." method="_on_back_button_pressed"]
