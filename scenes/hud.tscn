@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbljuasuki7pu"]
+[gd_scene load_steps=4 format=3 uid="uid://dbljuasuki7pu"]
 
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_62db1"]
 [ext_resource type="Texture2D" uid="uid://dh4q7gt6suex0" path="res://assets/misc/title.png" id="2_r04io"]
+[ext_resource type="FontFile" uid="uid://dkk2lnbhyysgf" path="res://assets/fonts/NevisBold-KGwl.ttf" id="3_dcqy5"]
 
 [node name="HUD" type="Node"]
 script = ExtResource("1_62db1")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Title" type="TextureRect" parent="MainMenu"]
 anchors_preset = 5
@@ -33,6 +35,7 @@ offset_right = 100.0
 offset_bottom = 101.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_dcqy5")
 theme_override_font_sizes/font_size = 48
 text = "Play"
 
@@ -48,11 +51,11 @@ offset_right = 100.0
 offset_bottom = 201.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_dcqy5")
 theme_override_font_sizes/font_size = 48
 text = "Options"
 
 [node name="OptionsMenu" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Title" type="Label" parent="OptionsMenu"]
 anchors_preset = 5
@@ -63,6 +66,7 @@ offset_top = 20.0
 offset_right = 95.5
 offset_bottom = 92.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_dcqy5")
 theme_override_font_sizes/font_size = 50
 text = "Options"
 horizontal_alignment = 1
@@ -79,6 +83,7 @@ offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_dcqy5")
 theme_override_font_sizes/font_size = 32
 text = "Back
 "
