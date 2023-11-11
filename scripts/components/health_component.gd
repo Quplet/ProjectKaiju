@@ -11,7 +11,3 @@ func damage(attack: Attack):
 func _ready():
 	health = MAX_HEALTH
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
