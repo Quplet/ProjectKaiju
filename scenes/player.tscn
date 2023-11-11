@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://blsedkmpi6feg"]
+
+[ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_wdfvb"]
+[ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hitbox_component.tscn" id="2_aiy11"]
+[ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_kba4j"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_wdfvb")]
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_aiy11")]
+health_component = NodePath("../HealthComponent")
+knockback_component = NodePath("../KnockbackComponent")
+
+[node name="KnockbackComponent" parent="." instance=ExtResource("3_kba4j")]
