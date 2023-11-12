@@ -6,7 +6,8 @@ var logger: Log = Util.LOGGER
 @export var knockback_resistance: float = 0.0
 
 func knockback(attack: Attack):
-	var parent = get_parent()
+	# All components will be attached to a characterbody attached to a characterbody. We want the knockback to affect the root body.
+	var parent = get_parent().get_parent() 
 	if not parent:
 		logger.error("KnockbackComponent has no parent!")
 		return
