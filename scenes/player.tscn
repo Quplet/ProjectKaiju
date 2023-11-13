@@ -35,10 +35,16 @@ collision_mask = 513
 motion_mode = 1
 script = ExtResource("1_6whxk")
 
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.384314)
+polygon = PackedVector2Array(90, 0, 77, -8, 50, -15, -54, -15, -77, -10, -91, 0, -77, 8, -53, 14, 51, 14, 75, 10)
+
 [node name="Body" type="CharacterBody2D" parent="."]
 position = Vector2(0, -100)
 collision_layer = 256
 collision_mask = 8
+floor_constant_speed = true
+platform_floor_layers = 4294901760
 script = ExtResource("2_qenhg")
 
 [node name="KnockbackComponent" parent="Body" instance=ExtResource("3_kba4j")]
