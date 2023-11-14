@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://blsedkmpi6feg"]
+[gd_scene load_steps=14 format=3 uid="uid://blsedkmpi6feg"]
 
 [ext_resource type="Script" path="res://scripts/objects/player.gd" id="1_6whxk"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_wdfvb"]
-[ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hitbox_component.tscn" id="2_aiy11"]
+[ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hurtbox_component.tscn" id="2_aiy11"]
 [ext_resource type="Script" path="res://scripts/objects/player_body.gd" id="2_qenhg"]
 [ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_kba4j"]
 [ext_resource type="Texture2D" uid="uid://d4k2i4nbtcbrx" path="res://assets/sprites/player/idle0.png" id="4_77pc7"]
+[ext_resource type="Texture2D" uid="uid://bv0gfghb7h1r7" path="res://assets/sprites/player/heavy_attack0.png" id="6_2ic4k"]
+[ext_resource type="Texture2D" uid="uid://bl3hgr36bhr1e" path="res://assets/sprites/player/jump0.png" id="7_bc6iq"]
+[ext_resource type="Texture2D" uid="uid://baovpw6xgmqpk" path="res://assets/sprites/player/light_attack0.png" id="8_xh4v1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gmrg"]
 radius = 72.0
@@ -15,10 +18,34 @@ height = 174.0
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_2ic4k")
+}],
+"loop": true,
+"name": &"heavy_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_77pc7")
 }],
 "loop": true,
 "name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bc6iq")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_xh4v1")
+}],
+"loop": true,
+"name": &"light_attack",
 "speed": 5.0
 }]
 
@@ -41,7 +68,7 @@ polygon = PackedVector2Array(90, 0, 77, -8, 50, -15, -54, -15, -77, -10, -91, 0,
 
 [node name="Body" type="CharacterBody2D" parent="."]
 position = Vector2(0, -100)
-collision_layer = 256
+collision_layer = 0
 collision_mask = 8
 floor_constant_speed = true
 platform_floor_layers = 4294901760
@@ -49,20 +76,19 @@ script = ExtResource("2_qenhg")
 
 [node name="KnockbackComponent" parent="Body" instance=ExtResource("3_kba4j")]
 
-[node name="HitboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_aiy11")]
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_aiy11")]
 collision_layer = 2
 collision_mask = 4
 health_component = NodePath("../HealthComponent")
 knockback_component = NodePath("../KnockbackComponent")
 
-[node name="Hurtbox" type="CollisionShape2D" parent="Body/HitboxComponent"]
+[node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_2gmrg")
 debug_color = Color(0, 0.647059, 0.239216, 0.419608)
 
 [node name="HealthComponent" parent="Body" instance=ExtResource("1_wdfvb")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
-position = Vector2(-10, 0)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jhxgh")
 animation = &"idle"
