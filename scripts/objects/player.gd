@@ -2,11 +2,13 @@ extends CharacterBody2D
 
 @export var SPEED_X: float = 200.0
 @export var SPEED_Y: float = 75.0
+@export var JUMP_VELOCITY = -600.0
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Get the input direction and handle the movement/deceleration.
 	var direction_x: float = Input.get_axis("Left", "Right")
 	var direction_y: float = Input.get_axis("Up", "Down")
+	
 	if direction_x:
 		velocity.x = direction_x * SPEED_X
 	else:
