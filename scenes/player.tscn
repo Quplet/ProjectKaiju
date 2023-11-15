@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://blsedkmpi6feg"]
+[gd_scene load_steps=23 format=3 uid="uid://blsedkmpi6feg"]
 
 [ext_resource type="Script" path="res://scripts/objects/player.gd" id="1_6whxk"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_wdfvb"]
@@ -10,6 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://bl3hgr36bhr1e" path="res://assets/sprites/player/jump0.png" id="7_bc6iq"]
 [ext_resource type="Texture2D" uid="uid://baovpw6xgmqpk" path="res://assets/sprites/player/light_attack0.png" id="8_xh4v1"]
 [ext_resource type="PackedScene" uid="uid://bqh4oevhboev5" path="res://scenes/components/attack_component.tscn" id="10_6nc4p"]
+[ext_resource type="AudioStream" uid="uid://d1ru4eix8ryn0" path="res://assets/sound/sfx/cs325_jump.wav" id="11_21fw4"]
+[ext_resource type="AudioStream" uid="uid://corqjaksbuaq1" path="res://assets/sound/sfx/pk_kaiju_1.wav" id="12_gj0iq"]
+[ext_resource type="AudioStream" uid="uid://dbs45dvbcym3o" path="res://assets/sound/sfx/cs325_woosh.wav" id="13_kyqm8"]
+[ext_resource type="AudioStream" uid="uid://bg0arrlxuwr64" path="res://assets/sound/sfx/pk_kaiju_2.wav" id="14_40bi0"]
+[ext_resource type="AudioStream" uid="uid://b6s5j2lx42fyn" path="res://assets/sound/sfx/cs325_woosh2.wav" id="15_vmhtv"]
+[ext_resource type="AudioStream" uid="uid://bpk4hqjoywutv" path="res://assets/sound/sfx/pk_kaiju_3.wav" id="16_deyaw"]
+[ext_resource type="AudioStream" uid="uid://812bi7y5pve2" path="res://assets/sound/sfx/cs325_hurt.wav" id="17_ykapk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gmrg"]
 radius = 72.0
@@ -127,3 +134,45 @@ polygon = PackedVector2Array(110, -144, 126, -99, 134, -28, 122.824, 23.805, 62,
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_o7bqa")
+
+[node name="sfx_jump" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("11_21fw4")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="sfx_jump_roar" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("12_gj0iq")
+volume_db = -15.0
+bus = &"SFX"
+
+[node name="sfx_light" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("13_kyqm8")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="sfx_light_roar" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("14_40bi0")
+volume_db = -15.0
+bus = &"SFX"
+
+[node name="sfx_heavy" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("15_vmhtv")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="sfx_heavy_roar" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("16_deyaw")
+volume_db = -15.0
+bus = &"SFX"
+
+[node name="sfx_hurt" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -100)
+stream = ExtResource("17_ykapk")
+volume_db = 5.0
+bus = &"SFX"
