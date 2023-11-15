@@ -41,8 +41,8 @@ func _physics_process(_delta):
 			if Input.is_action_just_pressed("jump"):
 				$Body.velocity.y = JUMP_VELOCITY
 				$Body.switch_animation("jump")
-				$sfx_jump.play()
-				$sfx_jump_roar.play()
+				$JumpSfx.play()
+				$JumpRoar.play()
 	
 			#if velocity.x == 0 and velocity.y == 0:
 			#	$Body.switch_animation("idle")
