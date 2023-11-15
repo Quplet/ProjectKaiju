@@ -15,6 +15,9 @@
 radius = 72.0
 height = 174.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3di3e"]
+height = 190.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_jhxgh"]
 animations = [{
 "frames": [{
@@ -49,9 +52,6 @@ animations = [{
 "name": &"light_attack",
 "speed": 5.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3di3e"]
-height = 190.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dci46"]
 radius = 15.0
@@ -93,13 +93,13 @@ debug_color = Color(0, 0.647059, 0.239216, 0.419608)
 
 [node name="HealthComponent" parent="Body" instance=ExtResource("1_wdfvb")]
 
+[node name="BodyCollision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CapsuleShape2D_3di3e")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jhxgh")
 animation = &"idle"
-
-[node name="BodyCollision" type="CollisionShape2D" parent="Body"]
-shape = SubResource("CapsuleShape2D_3di3e")
 
 [node name="LightAttackComponent" parent="Body" instance=ExtResource("10_6nc4p")]
 visible = false
@@ -113,6 +113,18 @@ position = Vector2(132, -29)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_dci46")
 debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="HeavyAttackComponent" parent="Body" instance=ExtResource("10_6nc4p")]
+visible = false
+attack_animation_name = &"heavy_attack"
+attack_duration = 1.5
+attack_damage = 50.0
+attack_knockback = 50.0
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="Body/HeavyAttackComponent"]
+position = Vector2(-0.703125, 2.00493)
+scale = Vector2(1.02344, 1.00798)
+polygon = PackedVector2Array(110, -144, 126, -99, 134, -28, 122.824, 23.805, 62, 44, 54, -175, 93, -183)
 
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708

@@ -16,8 +16,6 @@ func _physics_process(_delta):
 	# Get the input direction and handle the movement/deceleration.
 	var direction_x: float = Input.get_axis("left", "right")
 	var direction_y: float = Input.get_axis("up", "down")
-
-	
 	
 	if $Body.is_on_floor():
 
@@ -45,5 +43,7 @@ func _physics_process(_delta):
 
 			if Input.is_action_just_pressed("light_attack"):
 				$Body.light_attack()
+			if Input.is_action_just_pressed("heavy_attack"):
+				$Body.heavy_attack()
 
 	move_and_slide()

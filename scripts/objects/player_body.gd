@@ -23,12 +23,19 @@ func flip_body(direction: float):
 
 	$AnimatedSprite2D.flip_h = direction < 0
 	$LightAttackComponent.scale.x = direction/abs(direction)
+	$HeavyAttackComponent.scale.x = direction/abs(direction)
 
 func light_attack():
 	$LightAttackComponent.attack()
 
+func heavy_attack():
+	$HeavyAttackComponent.attack()
+
 func is_attacking() -> bool:
 	if $LightAttackComponent.is_attack_active():
+		return true
+
+	if $HeavyAttackComponent.is_attack_active():
 		return true
 	
 	return false
