@@ -1,5 +1,5 @@
 extends Node
-class_name HitboxComponent
+class_name HurtboxComponent
 
 @export var health_component : HealthComponent
 @export var knockback_component : KnockbackComponent

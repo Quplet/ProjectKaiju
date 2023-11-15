@@ -11,16 +11,24 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = get_parent().JUMP_VELOCITY
-		$AnimatedSprite2D.animation = "jump"
-
 	move_and_slide()
 
 
 func switch_animation(animation_name: StringName):
 	$AnimatedSprite2D.animation = animation_name
 
-func flip_body(direction: int):
+func flip_body(direction: float):
+	if direction == 0.0:
+		return
+
 	$AnimatedSprite2D.flip_h = direction < 0
+	$LightAttackComponent.scale.x = direction/abs(direction)
+
+func light_attack():
+	$LightAttackComponent.attack()
+
+func is_attacking() -> bool:
+	if $LightAttackComponent.is_attack_active():
+		return true
+	
+	return false

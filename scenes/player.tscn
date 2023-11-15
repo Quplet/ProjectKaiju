@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://blsedkmpi6feg"]
+[gd_scene load_steps=16 format=3 uid="uid://blsedkmpi6feg"]
 
 [ext_resource type="Script" path="res://scripts/objects/player.gd" id="1_6whxk"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_wdfvb"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bv0gfghb7h1r7" path="res://assets/sprites/player/heavy_attack0.png" id="6_2ic4k"]
 [ext_resource type="Texture2D" uid="uid://bl3hgr36bhr1e" path="res://assets/sprites/player/jump0.png" id="7_bc6iq"]
 [ext_resource type="Texture2D" uid="uid://baovpw6xgmqpk" path="res://assets/sprites/player/light_attack0.png" id="8_xh4v1"]
+[ext_resource type="PackedScene" uid="uid://bqh4oevhboev5" path="res://scenes/components/attack_component.tscn" id="10_6nc4p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2gmrg"]
 radius = 72.0
@@ -51,6 +52,10 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3di3e"]
 height = 190.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dci46"]
+radius = 15.0
+height = 116.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o7bqa"]
 radius = 5.0
@@ -95,6 +100,19 @@ animation = &"idle"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="Body"]
 shape = SubResource("CapsuleShape2D_3di3e")
+
+[node name="LightAttackComponent" parent="Body" instance=ExtResource("10_6nc4p")]
+visible = false
+attack_animation_name = &"light_attack"
+attack_duration = 0.5
+attack_damage = 25.0
+attack_knockback = 25.0
+
+[node name="Hitbox" type="CollisionShape2D" parent="Body/LightAttackComponent"]
+position = Vector2(132, -29)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_dci46")
+debug_color = Color(1, 0, 0, 0.419608)
 
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708

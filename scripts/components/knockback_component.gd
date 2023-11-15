@@ -7,16 +7,26 @@ var logger: Log = Util.LOGGER
 
 func knockback(attack: Attack):
 	# All components will be attached to a characterbody attached to a characterbody. We want the knockback to affect the root body.
-	var parent = get_parent().get_parent() 
-	if not parent:
-		logger.error("KnockbackComponent has no parent!")
+	var entity: CharacterBody2D = get_parent().get_parent() 
+	if not entity:
+		logger.error("KnockbackComponent has no entity!")
 		return
 
-	if not parent.get("velocity"):
-		logger.error("KnockbackComponent parent has no velecity property! Parent: " + parent.name)
+	if not entity.get("velocity"):
+		logger.error("KnockbackComponent entity has no velecity property! Parent: " + entity.name)
 		return
 
-	parent.velocity += (parent.global_position - attack.attack_position).normalized() * (attack.knockback_force * (1 - knockback_resistance))
+	var net_force = attack.knockback_force * (1 - knockback_resistance)
+
+	var light_attack_component: AttackComponent = get_node_or_null("../LightAttackComponent")
+	if net_force > 20 and light_attack_component != null and light_attack_component.is_attack_active():
+		light_attack_component.end_attack()
+
+	var heavy_attack_component: AttackComponent = get_node_or_null("../HeavyAttackComponent")
+	if net_force > 30 and heavy_attack_component != null and heavy_attack_component.is_attack_active():
+		heavy_attack_component.end_attack()
+
+	entity.velocity += (entity.global_position - attack.attack_position).normalized() * net_force
 
 
 # Called when the node enters the scene tree for the first time.
