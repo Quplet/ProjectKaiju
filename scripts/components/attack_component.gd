@@ -5,6 +5,7 @@ class_name AttackComponent
 @export var attack_duration: float
 @export var attack_damage: float
 @export var attack_knockback: float
+@export var attack_sounds: Array[AudioStreamPlayer2D]
 
 var entity: Node
 var logger: Log = Util.LOGGER
@@ -32,6 +33,9 @@ func attack():
 	attack_start.emit()
 
 	get_parent().switch_animation(attack_animation_name)
+
+	for sfx in attack_sounds:
+		sfx.play()
 
 	self.visible = true
 	$Hitbox.set_deferred("disabled", false)

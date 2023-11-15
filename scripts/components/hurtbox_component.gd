@@ -1,14 +1,18 @@
 extends Node
 class_name HurtboxComponent
 
-@export var health_component : HealthComponent
-@export var knockback_component : KnockbackComponent
+@export var health_component: HealthComponent
+@export var knockback_component: KnockbackComponent
+@export var hit_sounds: Array[AudioStreamPlayer2D]
 
 var entity: Node
 var logger: Log = Util.LOGGER
 
 func damage(attack: Attack):
 	logger.debug("[" + entity.name + "] Attack received with damage: " + str(attack.damage) + ", knockback: " + str(attack.knockback_force) + " from: " + str(attack.attack_position))
+
+	for sfx in hit_sounds:
+		sfx.play()
 
 	if health_component:
 		health_component.damage(attack)

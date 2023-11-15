@@ -13,7 +13,8 @@ metadata/_edit_group_ = true
 [node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
 position = Vector2(788, 382)
 
-[node name="bgm_track2" type="AudioStreamPlayer" parent="."]
+[node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_0c6aw")
 volume_db = -20.0
 autoplay = true
+bus = &"Music"

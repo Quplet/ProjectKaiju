@@ -15,7 +15,7 @@ var state: State = State.IDLE
 var logger: Log = Util.LOGGER
 
 func _ready():
-	logger.CURRENT_LOG_LEVEL = 0 #debug
+	logger.CURRENT_LOG_LEVEL = logger.LogLevel.DEBUG #debug
 
 func _physics_process(_delta):
 	# Get the input direction and handle the movement/deceleration.
@@ -50,11 +50,7 @@ func _physics_process(_delta):
 
 			if Input.is_action_just_pressed("light_attack"):
 				$Body.light_attack()
-				$sfx_light.play()
-				$sfx_light_roar.play()
 			if Input.is_action_just_pressed("heavy_attack"):
 				$Body.heavy_attack()
-				$sfx_heavy.play()
-				$sfx_heavy_roar.play()
 
 	move_and_slide()

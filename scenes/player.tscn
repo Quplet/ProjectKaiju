@@ -88,13 +88,19 @@ script = ExtResource("2_qenhg")
 
 [node name="KnockbackComponent" parent="Body" instance=ExtResource("3_kba4j")]
 
-[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_aiy11")]
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "hit_sounds") instance=ExtResource("2_aiy11")]
 health_component = NodePath("../HealthComponent")
 knockback_component = NodePath("../KnockbackComponent")
+hit_sounds = [NodePath("HurtSfx")]
 
 [node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_2gmrg")
 debug_color = Color(0, 0.647059, 0.239216, 0.419608)
+
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="Body/HurtboxComponent"]
+stream = ExtResource("17_ykapk")
+volume_db = 5.0
+bus = &"SFX"
 
 [node name="HealthComponent" parent="Body" instance=ExtResource("1_wdfvb")]
 
@@ -106,12 +112,13 @@ scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jhxgh")
 animation = &"idle"
 
-[node name="LightAttackComponent" parent="Body" instance=ExtResource("10_6nc4p")]
+[node name="LightAttackComponent" parent="Body" node_paths=PackedStringArray("attack_sounds") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"light_attack"
 attack_duration = 0.5
 attack_damage = 25.0
 attack_knockback = 500.0
+attack_sounds = [NodePath("LightAttackSfx"), NodePath("LightAttackRoar")]
 
 [node name="Hitbox" type="CollisionShape2D" parent="Body/LightAttackComponent"]
 position = Vector2(132, -29)
@@ -119,60 +126,51 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_dci46")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="HeavyAttackComponent" parent="Body" instance=ExtResource("10_6nc4p")]
+[node name="LightAttackSfx" type="AudioStreamPlayer2D" parent="Body/LightAttackComponent"]
+stream = ExtResource("13_kyqm8")
+volume_db = 5.0
+bus = &"SFX"
+
+[node name="LightAttackRoar" type="AudioStreamPlayer2D" parent="Body/LightAttackComponent"]
+stream = ExtResource("14_40bi0")
+volume_db = -15.0
+bus = &"SFX"
+
+[node name="HeavyAttackComponent" parent="Body" node_paths=PackedStringArray("attack_sounds") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"heavy_attack"
 attack_duration = 1.5
 attack_damage = 50.0
 attack_knockback = 1000.0
+attack_sounds = [NodePath("HeavyAttackSfx"), NodePath("HeavyAttackRoar")]
 
 [node name="Hitbox" type="CollisionPolygon2D" parent="Body/HeavyAttackComponent"]
 position = Vector2(-0.703125, 2.00493)
 scale = Vector2(1.02344, 1.00798)
 polygon = PackedVector2Array(110, -144, 126, -99, 134, -28, 122.824, 23.805, 62, 44, 54, -175, 93, -183)
 
+[node name="HeavyAttackSfx" type="AudioStreamPlayer2D" parent="Body/HeavyAttackComponent"]
+stream = ExtResource("15_vmhtv")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="HeavyAttackRoar" type="AudioStreamPlayer2D" parent="Body/HeavyAttackComponent"]
+stream = ExtResource("16_deyaw")
+volume_db = -15.0
+bus = &"SFX"
+
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_o7bqa")
 
-[node name="sfx_jump" type="AudioStreamPlayer2D" parent="."]
+[node name="JumpSfx" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -100)
 stream = ExtResource("11_21fw4")
 volume_db = 5.0
 bus = &"SFX"
 
-[node name="sfx_jump_roar" type="AudioStreamPlayer2D" parent="."]
+[node name="JumpRoar" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -100)
 stream = ExtResource("12_gj0iq")
 volume_db = -15.0
-bus = &"SFX"
-
-[node name="sfx_light" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -100)
-stream = ExtResource("13_kyqm8")
-volume_db = 5.0
-bus = &"SFX"
-
-[node name="sfx_light_roar" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -100)
-stream = ExtResource("14_40bi0")
-volume_db = -15.0
-bus = &"SFX"
-
-[node name="sfx_heavy" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -100)
-stream = ExtResource("15_vmhtv")
-volume_db = -5.0
-bus = &"SFX"
-
-[node name="sfx_heavy_roar" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -100)
-stream = ExtResource("16_deyaw")
-volume_db = -15.0
-bus = &"SFX"
-
-[node name="sfx_hurt" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -100)
-stream = ExtResource("17_ykapk")
-volume_db = 5.0
 bus = &"SFX"
