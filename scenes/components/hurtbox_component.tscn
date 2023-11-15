@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/components/hurtbox_component.gd" id="1_qasph"]
 
-[node name="HitboxComponent" type="Area2D"]
+[node name="HurtboxComponent" type="Area2D"]
+collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_qasph")

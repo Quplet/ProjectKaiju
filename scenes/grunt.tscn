@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://d128o7shs3idx"]
+
+[ext_resource type="Script" path="res://scripts/objects/enemy.gd" id="1_83c4u"]
+[ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_u73y2"]
+[ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hurtbox_component.tscn" id="2_imrua"]
+[ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_uqhpf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yrrdo"]
+radius = 20.0
+height = 120.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ylwcv"]
+height = 120.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7h8lm"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iexad"]
+height = 70.0
+
+[node name="Grunt" type="CharacterBody2D"]
+collision_layer = 0
+motion_mode = 1
+script = ExtResource("1_83c4u")
+
+[node name="Body" type="CharacterBody2D" parent="."]
+position = Vector2(0, -70)
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+
+[node name="HealthComponent" parent="Body" instance=ExtResource("1_u73y2")]
+
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_imrua")]
+health_component = NodePath("../HealthComponent")
+knockback_component = NodePath("../KnockbackComponent")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_yrrdo")
+debug_color = Color(0, 1, 0, 0.419608)
+
+[node name="BodyCollision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CapsuleShape2D_ylwcv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+sprite_frames = SubResource("SpriteFrames_7h8lm")
+animation = &"idle"
+
+[node name="KnockbackComponent" parent="Body" instance=ExtResource("3_uqhpf")]
+
+[node name="Floor" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_iexad")

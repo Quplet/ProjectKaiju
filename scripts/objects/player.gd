@@ -12,6 +12,11 @@ enum State {
 
 var state: State = State.IDLE
 
+var logger: Log = Util.LOGGER
+
+func _ready():
+	logger.CURRENT_LOG_LEVEL = 0 #debug
+
 func _physics_process(_delta):
 	# Get the input direction and handle the movement/deceleration.
 	var direction_x: float = Input.get_axis("left", "right")
@@ -20,10 +25,10 @@ func _physics_process(_delta):
 	if $Body.is_on_floor():
 
 		if not direction_x or $Body.is_attacking():
-			velocity.x = move_toward(velocity.x, 0, SPEED_X)
+			velocity.x = move_toward(velocity.x, 0, SPEED_X/10.0)
 	
 		if not direction_y or $Body.is_attacking():
-			velocity.y = move_toward(velocity.y, 0, SPEED_Y)
+			velocity.y = move_toward(velocity.y, 0, SPEED_Y/10.0)
 
 		if not $Body.is_attacking():
 			if direction_x:

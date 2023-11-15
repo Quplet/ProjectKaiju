@@ -82,8 +82,6 @@ script = ExtResource("2_qenhg")
 [node name="KnockbackComponent" parent="Body" instance=ExtResource("3_kba4j")]
 
 [node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_aiy11")]
-collision_layer = 2
-collision_mask = 4
 health_component = NodePath("../HealthComponent")
 knockback_component = NodePath("../KnockbackComponent")
 
@@ -106,7 +104,7 @@ visible = false
 attack_animation_name = &"light_attack"
 attack_duration = 0.5
 attack_damage = 25.0
-attack_knockback = 25.0
+attack_knockback = 500.0
 
 [node name="Hitbox" type="CollisionShape2D" parent="Body/LightAttackComponent"]
 position = Vector2(132, -29)
@@ -119,7 +117,7 @@ visible = false
 attack_animation_name = &"heavy_attack"
 attack_duration = 1.5
 attack_damage = 50.0
-attack_knockback = 50.0
+attack_knockback = 1000.0
 
 [node name="Hitbox" type="CollisionPolygon2D" parent="Body/HeavyAttackComponent"]
 position = Vector2(-0.703125, 2.00493)

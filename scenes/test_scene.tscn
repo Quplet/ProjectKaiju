@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cr43402jfatdw"]
+[gd_scene load_steps=3 format=3 uid="uid://cr43402jfatdw"]
 
 [ext_resource type="PackedScene" uid="uid://blsedkmpi6feg" path="res://scenes/player.tscn" id="1_j5pfj"]
+[ext_resource type="PackedScene" uid="uid://d128o7shs3idx" path="res://scenes/grunt.tscn" id="2_7lp0y"]
 
 [node name="TestScene" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_j5pfj")]
 position = Vector2(597, 381)
 metadata/_edit_group_ = true
+
+[node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
+position = Vector2(788, 382)
