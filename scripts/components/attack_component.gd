@@ -6,6 +6,7 @@ class_name AttackComponent
 @export var attack_damage: float
 @export var attack_knockback: float
 
+var entity: Node
 var logger: Log = Util.LOGGER
 
 signal attack_start
@@ -13,6 +14,14 @@ signal attack_end
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if get_parent() == null:
+		logger.error("AttackComponent has no parent!")
+	
+	entity = get_parent().get_parent()
+
+	if entity == null:
+		logger.error("AttackComponent found Body, but didn't find parent entity!")
+
 	if $Hitbox == null:
 		logger.fatal("AttackComponent has no hitbox! Reminder that it is expecting its hitbox child node to be named 'Hitbox'!")
 
@@ -46,8 +55,8 @@ func _on_area_entered(area):
 	if area is HurtboxComponent and area != get_node_or_null("../HurtboxComponent"):
 		var hurtbox: HurtboxComponent = area
 
-		logger.info("Attack with damage: " + str(attack_damage) + ", knockback: " + str(attack_knockback) + ", sent to " + area.get_parent().get_parent().name)
-		hurtbox.damage(Attack.new(attack_damage, get_parent().global_position, attack_knockback))
+		logger.debug("[" + entity.name + "] Attack with damage: " + str(attack_damage) + ", knockback: " + str(attack_knockback) + ", sent to " + area.get_parent().get_parent().name)
+		hurtbox.damage(Attack.new(attack_damage, entity.global_position, attack_knockback))
 
 	
 

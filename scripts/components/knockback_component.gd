@@ -1,20 +1,13 @@
 extends Node
 class_name KnockbackComponent
 
+var entity: CharacterBody2D
 var logger: Log = Util.LOGGER
 
 @export var knockback_resistance: float = 0.0
 
 func knockback(attack: Attack):
-	# All components will be attached to a characterbody attached to a characterbody. We want the knockback to affect the root body.
-	var entity: CharacterBody2D = get_parent().get_parent() 
-	if not entity:
-		logger.error("KnockbackComponent has no entity!")
-		return
-
-	if not entity.get("velocity"):
-		logger.error("KnockbackComponent entity has no velecity property! Parent: " + entity.name)
-		return
+	logger.debug("[" + entity.name + "] recieved knockback of value: " + str(attack.knockback_force) + ", from " + str(attack.attack_position))
 
 	var net_force = attack.knockback_force * (1 - knockback_resistance)
 
@@ -32,3 +25,12 @@ func knockback(attack: Attack):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	knockback_resistance = clamp(knockback_resistance, 0.0, 1.0)
+
+	entity = get_parent().get_parent() 
+	if not entity:
+		logger.error("KnockbackComponent has no entity!")
+		return
+
+	if entity.get("velocity") == null:
+		logger.error("KnockbackComponent entity has no velecity property! Parent: " + entity.name)
+		return
