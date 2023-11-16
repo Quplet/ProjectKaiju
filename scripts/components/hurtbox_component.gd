@@ -3,9 +3,10 @@ class_name HurtboxComponent
 
 @export var health_component: HealthComponent
 @export var knockback_component: KnockbackComponent
-@export var hit_sounds: Array[AudioStreamPlayer2D]
+@export var entity: CharacterBody2D
 
-var entity: Node
+var hit_sounds: Array[AudioStreamPlayer2D]
+
 var logger: Log = Util.LOGGER
 
 func damage(attack: Attack):
@@ -22,10 +23,9 @@ func damage(attack: Attack):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if get_parent() == null:
-		logger.error("HurtboxComponent has no parent!")
-	
-	entity = get_parent().get_parent()
-
 	if entity == null:
-		logger.error("HurtboxComponent found Body, but didn't find parent entity!")
+		logger.error("HurtboxComponent is not attached to an entity!")
+		
+	for child in get_children():
+		if child is AudioStreamPlayer2D:
+			hit_sounds.append(child)

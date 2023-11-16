@@ -13,12 +13,17 @@
 [node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
 position = Vector2(788, 382)
 
+[node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_0c6aw")
+volume_db = -20.0
+autoplay = true
+bus = &"Music"
+
 [node name="Player" parent="." instance=ExtResource("1_j5pfj")]
-position = Vector2(597, 381)
-SPEED_Y = 125.0
-metadata/_edit_group_ = true
+position = Vector2(321, 402)
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
+position = Vector2(276, -21)
 offset = Vector2(0, -100)
 position_smoothing_enabled = true
 position_smoothing_speed = 25.0
@@ -36,9 +41,3 @@ offset_bottom = 483.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_7l33e")
-
-[node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_0c6aw")
-volume_db = -20.0
-autoplay = true
-bus = &"Music"

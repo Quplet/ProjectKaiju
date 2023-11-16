@@ -86,12 +86,13 @@ floor_constant_speed = true
 platform_floor_layers = 4294901760
 script = ExtResource("2_qenhg")
 
-[node name="KnockbackComponent" parent="Body" instance=ExtResource("3_kba4j")]
+[node name="KnockbackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("3_kba4j")]
+entity = NodePath("../..")
 
-[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "hit_sounds") instance=ExtResource("2_aiy11")]
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "entity") instance=ExtResource("2_aiy11")]
 health_component = NodePath("../HealthComponent")
 knockback_component = NodePath("../KnockbackComponent")
-hit_sounds = [NodePath("HurtSfx")]
+entity = NodePath("../..")
 
 [node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_2gmrg")
@@ -112,13 +113,13 @@ scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jhxgh")
 animation = &"idle"
 
-[node name="LightAttackComponent" parent="Body" node_paths=PackedStringArray("attack_sounds") instance=ExtResource("10_6nc4p")]
+[node name="LightAttackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"light_attack"
 attack_duration = 0.5
 attack_damage = 25.0
 attack_knockback = 500.0
-attack_sounds = [NodePath("LightAttackSfx"), NodePath("LightAttackRoar")]
+entity = NodePath("../..")
 
 [node name="Hitbox" type="CollisionShape2D" parent="Body/LightAttackComponent"]
 position = Vector2(132, -29)
@@ -136,13 +137,13 @@ stream = ExtResource("14_40bi0")
 volume_db = -15.0
 bus = &"SFX"
 
-[node name="HeavyAttackComponent" parent="Body" node_paths=PackedStringArray("attack_sounds") instance=ExtResource("10_6nc4p")]
+[node name="HeavyAttackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"heavy_attack"
 attack_duration = 1.5
 attack_damage = 50.0
 attack_knockback = 1000.0
-attack_sounds = [NodePath("HeavyAttackSfx"), NodePath("HeavyAttackRoar")]
+entity = NodePath("../..")
 
 [node name="Hitbox" type="CollisionPolygon2D" parent="Body/HeavyAttackComponent"]
 position = Vector2(-0.703125, 2.00493)

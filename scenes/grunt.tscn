@@ -40,9 +40,10 @@ motion_mode = 1
 
 [node name="HealthComponent" parent="Body" instance=ExtResource("1_u73y2")]
 
-[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component") instance=ExtResource("2_imrua")]
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "entity") instance=ExtResource("2_imrua")]
 health_component = NodePath("../HealthComponent")
 knockback_component = NodePath("../KnockbackComponent")
+entity = NodePath("../..")
 
 [node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_yrrdo")
@@ -57,7 +58,8 @@ scale = Vector2(0.101908, 0.101908)
 sprite_frames = SubResource("SpriteFrames_7h8lm")
 animation = &"idle"
 
-[node name="KnockbackComponent" parent="Body" instance=ExtResource("3_uqhpf")]
+[node name="KnockbackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("3_uqhpf")]
+entity = NodePath("../..")
 
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708

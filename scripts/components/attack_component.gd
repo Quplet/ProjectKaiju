@@ -5,9 +5,10 @@ class_name AttackComponent
 @export var attack_duration: float
 @export var attack_damage: float
 @export var attack_knockback: float
-@export var attack_sounds: Array[AudioStreamPlayer2D]
+@export var entity: CharacterBody2D
 
-var entity: Node
+var attack_sounds: Array[AudioStreamPlayer2D]
+
 var logger: Log = Util.LOGGER
 
 signal attack_start
@@ -15,16 +16,15 @@ signal attack_end
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if get_parent() == null:
-		logger.error("AttackComponent has no parent!")
-	
-	entity = get_parent().get_parent()
-
 	if entity == null:
-		logger.error("AttackComponent found Body, but didn't find parent entity!")
+		logger.error("AttackComponent is not attached to an entity!")
 
 	if $Hitbox == null:
 		logger.fatal("AttackComponent has no hitbox! Reminder that it is expecting its hitbox child node to be named 'Hitbox'!")
+
+	for child in get_children():
+		if child is AudioStreamPlayer2D:
+			attack_sounds.append(child)
 
 	self.visible = false
 	$Hitbox.set_deferred("disabled", true)
