@@ -4,14 +4,6 @@ extends CharacterBody2D
 @export var SPEED_Y: float = 75.0
 @export var JUMP_VELOCITY = -600.0
 
-enum State {
-	ATTACKING,
-	BLOCKING,
-	IDLE
-}
-
-var state: State = State.IDLE
-
 var logger: Log = Util.LOGGER
 
 func _ready():
