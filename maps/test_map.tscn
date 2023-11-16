@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5lrnmycfaa5x"]
+
+[ext_resource type="Texture2D" uid="uid://drqxqex3bh0ib" path="res://assets/sprites/textures/test_textures.png" id="1_rjjw6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_784qm"]
+texture = ExtResource("1_rjjw6")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 8, -64, 7)
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_p30kn"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_784qm")
+
+[node name="test_map" type="TileMap"]
+tile_set = SubResource("TileSet_p30kn")
+format = 2
+layer_0/tile_data = PackedInt32Array(65536, 65536, 0, 65537, 65536, 0, 65538, 65536, 0, 65539, 65536, 0, 65540, 65536, 0, 65541, 65536, 0, 65542, 65536, 0, 65543, 65536, 0, 65544, 65536, 0, 65545, 65536, 0, 131081, 0, 0, 196617, 0, 0, 196608, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 196616, 0, 0, 196615, 0, 0, 196612, 0, 0, 196611, 0, 0, 196610, 0, 0, 196609, 0, 0, 196613, 0, 0, 196614, 0, 0, 0, 131072, 0, 1, 131072, 0, 2, 131072, 0, 3, 131072, 0, 4, 131072, 0, 5, 131072, 0, 6, 131072, 0, 7, 131072, 0, 8, 131072, 0, 9, 131072, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0)
