@@ -10,28 +10,35 @@
 
 [node name="test_map" parent="." instance=ExtResource("1_r6hih")]
 
+[node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
+position = Vector2(788, 382)
+
 [node name="Player" parent="." instance=ExtResource("1_j5pfj")]
 position = Vector2(597, 381)
 SPEED_Y = 125.0
 metadata/_edit_group_ = true
 
-[node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
-position = Vector2(788, 382)
+[node name="PlayerCamera" type="Camera2D" parent="Player"]
+offset = Vector2(0, -100)
+position_smoothing_enabled = true
+position_smoothing_speed = 25.0
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 25.0
+
+[node name="vignette" type="TextureRect" parent="Player/PlayerCamera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -981.0
+offset_top = -597.0
+offset_right = 939.0
+offset_bottom = 483.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_7l33e")
 
 [node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_0c6aw")
 volume_db = -20.0
 autoplay = true
 bus = &"Music"
-
-[node name="vignette" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -384.0
-offset_top = -216.0
-offset_right = 384.0
-offset_bottom = 216.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_7l33e")

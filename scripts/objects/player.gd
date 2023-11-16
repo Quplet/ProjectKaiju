@@ -23,7 +23,6 @@ func _physics_process(_delta):
 	var direction_y: float = Input.get_axis("up", "down")
 	
 	if $Body.is_on_floor():
-
 		if not direction_x or $Body.is_attacking():
 			velocity.x = move_toward(velocity.x, 0, SPEED_X/10.0)
 	
@@ -40,10 +39,9 @@ func _physics_process(_delta):
 	
 			if Input.is_action_just_pressed("jump"):
 				$Body.velocity.y = JUMP_VELOCITY
-				$Body.switch_animation("jump")
 				$JumpSfx.play()
 				$JumpRoar.play()
-	
+
 			#if velocity.x == 0 and velocity.y == 0:
 			#	$Body.switch_animation("idle")
 			$Body.switch_animation("idle")
@@ -52,5 +50,9 @@ func _physics_process(_delta):
 				$Body.light_attack()
 			if Input.is_action_just_pressed("heavy_attack"):
 				$Body.heavy_attack()
-
+	else:
+		#implement air attacks and animations here if we get to it
+		#otherwise for now, it'll just be jump/the in-air animation
+		$Body.switch_animation("jump")
+		
 	move_and_slide()
