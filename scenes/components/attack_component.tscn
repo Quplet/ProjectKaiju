@@ -7,8 +7,16 @@ collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_ou2eq")
 
-[node name="DurationTimer" type="Timer" parent="."]
+[node name="AttackDurationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StartupDurationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="EndlagDurationTimer" type="Timer" parent="."]
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]
+[connection signal="timeout" from="AttackDurationTimer" to="." method="_on_attack_duration_timer_timeout"]
+[connection signal="timeout" from="StartupDurationTimer" to="." method="_on_startup_duration_timer_timeout"]
+[connection signal="timeout" from="EndlagDurationTimer" to="." method="_on_endlag_duration_timer_timeout"]

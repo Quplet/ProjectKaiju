@@ -116,7 +116,9 @@ animation = &"idle"
 [node name="LightAttackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"light_attack"
-attack_duration = 0.5
+startup_duration = 0.1
+attack_duration = 0.3
+endlag_duration = 0.1
 attack_damage = 25.0
 attack_knockback = 500.0
 entity = NodePath("../..")
@@ -140,7 +142,9 @@ bus = &"SFX"
 [node name="HeavyAttackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("10_6nc4p")]
 visible = false
 attack_animation_name = &"heavy_attack"
-attack_duration = 1.5
+startup_duration = 0.3
+attack_duration = 0.3
+endlag_duration = 0.5
 attack_damage = 50.0
 attack_knockback = 1000.0
 entity = NodePath("../..")
