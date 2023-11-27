@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://d128o7shs3idx"]
+[gd_scene load_steps=12 format=3 uid="uid://d128o7shs3idx"]
 
 [ext_resource type="Script" path="res://scripts/objects/enemy.gd" id="1_83c4u"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_u73y2"]
 [ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hurtbox_component.tscn" id="2_imrua"]
 [ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_uqhpf"]
+[ext_resource type="Shader" path="res://shaders/damagable_entity.gdshader" id="4_f312f"]
 [ext_resource type="Texture2D" uid="uid://bfwegy73s6xme" path="res://assets/sprites/enemy/gungrunt/gungrunt0.png" id="4_fgek1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yrrdo"]
@@ -12,6 +13,10 @@ height = 120.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ylwcv"]
 height = 120.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybjxu"]
+shader = ExtResource("4_f312f")
+shader_parameter/red_shift_ammount = null
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7h8lm"]
 animations = [{
@@ -38,7 +43,8 @@ collision_layer = 0
 collision_mask = 0
 motion_mode = 1
 
-[node name="HealthComponent" parent="Body" instance=ExtResource("1_u73y2")]
+[node name="HealthComponent" parent="Body" node_paths=PackedStringArray("sprite") instance=ExtResource("1_u73y2")]
+sprite = NodePath("../AnimatedSprite2D")
 
 [node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "entity") instance=ExtResource("2_imrua")]
 health_component = NodePath("../HealthComponent")
@@ -53,6 +59,7 @@ debug_color = Color(0, 1, 0, 0.419608)
 shape = SubResource("CapsuleShape2D_ylwcv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+material = SubResource("ShaderMaterial_ybjxu")
 position = Vector2(19, 7)
 scale = Vector2(0.101908, 0.101908)
 sprite_frames = SubResource("SpriteFrames_7h8lm")

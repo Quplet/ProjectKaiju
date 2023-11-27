@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://blsedkmpi6feg"]
+[gd_scene load_steps=25 format=3 uid="uid://blsedkmpi6feg"]
 
 [ext_resource type="Script" path="res://scripts/objects/player.gd" id="1_6whxk"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_wdfvb"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_kba4j"]
 [ext_resource type="Texture2D" uid="uid://d4k2i4nbtcbrx" path="res://assets/sprites/player/idle0.png" id="4_77pc7"]
 [ext_resource type="Texture2D" uid="uid://bv0gfghb7h1r7" path="res://assets/sprites/player/heavy_attack0.png" id="6_2ic4k"]
+[ext_resource type="Shader" path="res://shaders/damagable_entity.gdshader" id="7_4yhod"]
 [ext_resource type="Texture2D" uid="uid://bl3hgr36bhr1e" path="res://assets/sprites/player/jump0.png" id="7_bc6iq"]
 [ext_resource type="Texture2D" uid="uid://baovpw6xgmqpk" path="res://assets/sprites/player/light_attack0.png" id="8_xh4v1"]
 [ext_resource type="PackedScene" uid="uid://bqh4oevhboev5" path="res://scenes/components/attack_component.tscn" id="10_6nc4p"]
@@ -24,6 +25,10 @@ height = 174.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3di3e"]
 height = 190.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gcpah"]
+shader = ExtResource("7_4yhod")
+shader_parameter/red_shift_ammount = null
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jhxgh"]
 animations = [{
@@ -103,12 +108,14 @@ stream = ExtResource("17_ykapk")
 volume_db = 5.0
 bus = &"SFX"
 
-[node name="HealthComponent" parent="Body" instance=ExtResource("1_wdfvb")]
+[node name="HealthComponent" parent="Body" node_paths=PackedStringArray("sprite") instance=ExtResource("1_wdfvb")]
+sprite = NodePath("../AnimatedSprite2D")
 
 [node name="BodyCollision" type="CollisionShape2D" parent="Body"]
 shape = SubResource("CapsuleShape2D_3di3e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+material = SubResource("ShaderMaterial_gcpah")
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jhxgh")
 animation = &"idle"
