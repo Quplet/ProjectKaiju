@@ -8,6 +8,7 @@ class_name AttackComponent
 @export var attack_damage: float
 @export var attack_knockback: float
 @export var entity: CharacterBody2D
+@export var attack_range_area: Area2D
 
 var attack_sounds: Array[AudioStreamPlayer2D]
 var active: bool
@@ -66,11 +67,10 @@ func is_attack_active():
 func _on_area_entered(area):
 	if area is HurtboxComponent and area != get_node_or_null("../HurtboxComponent"):
 		var hurtbox: HurtboxComponent = area
+		if attack_range_area.overlaps_body(hurtbox.entity):
+			logger.debug("[" + entity.name + "] Attack with damage: " + str(attack_damage) + ", knockback: " + str(attack_knockback) + ", sent to " + area.get_parent().get_parent().name)
+			hurtbox.damage(Attack.new(attack_damage, entity.global_position, attack_knockback))
 
-		logger.debug("[" + entity.name + "] Attack with damage: " + str(attack_damage) + ", knockback: " + str(attack_knockback) + ", sent to " + area.get_parent().get_parent().name)
-		hurtbox.damage(Attack.new(attack_damage, entity.global_position, attack_knockback))
-
-	
 func _on_startup_duration_timer_timeout():
 	enable_hitbox()
 	

@@ -1,14 +1,60 @@
-[gd_scene load_steps=3 format=3 uid="uid://lnfonj1ufnd3"]
+[gd_scene load_steps=5 format=3 uid="uid://lnfonj1ufnd3"]
 
 [ext_resource type="PackedScene" uid="uid://dbljuasuki7pu" path="res://scenes/hud.tscn" id="1_agcuf"]
 [ext_resource type="AudioStream" uid="uid://tj6jbl7i7d1w" path="res://assets/sound/music/PK_Menu.wav" id="1_su6up"]
+[ext_resource type="PackedScene" uid="uid://bwqb6tq4s2kbk" path="res://scenes/bg_menu.tscn" id="3_g61mw"]
+[ext_resource type="Texture2D" uid="uid://dpv4dcwlembti" path="res://assets/sprites/overlay/vignette.png" id="4_vunsx"]
 
 [node name="Main" type="Node"]
 
 [node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_su6up")
-volume_db = -30.0
+volume_db = -20.0
 autoplay = true
 bus = &"Music"
 
 [node name="HUD" parent="." instance=ExtResource("1_agcuf")]
+
+[node name="dark_direction_light" type="DirectionalLight2D" parent="."]
+color = Color(0, 0.0313726, 0.0588235, 1)
+energy = 0.5
+blend_mode = 2
+range_z_max = 19
+
+[node name="Node2D" parent="." instance=ExtResource("3_g61mw")]
+
+[node name="Vignette3" type="TextureRect" parent="Node2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -318.0
+offset_top = -186.0
+offset_right = 1602.0
+offset_bottom = 894.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_vunsx")
+
+[node name="Vignette" type="TextureRect" parent="Node2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -318.0
+offset_top = -186.0
+offset_right = 1602.0
+offset_bottom = 894.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_vunsx")
+
+[node name="Vignette2" type="TextureRect" parent="Node2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -764.0
+offset_top = -223.0
+offset_right = 1156.0
+offset_bottom = 857.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_vunsx")

@@ -4,6 +4,9 @@ extends Node
 
 var states: Dictionary = {}
 var current_state: State
+var running: bool
+
+static var logger: Log = Util.LOGGER
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,15 +18,16 @@ func _ready():
 	if initial_state:
 		initial_state.enter()
 		current_state = initial_state
+		logger.debug("[" + get_parent().name + "] Initialized state machine to " + current_state.name)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float):
-	if current_state:
+	if current_state and running:
 		current_state.update(delta)
 		
 func _physics_process(delta: float):
-	if current_state:
+	if current_state and running:
 		current_state.physics_update(delta)
 		
 
@@ -40,3 +44,4 @@ func on_child_transition(state: State, new_state_name: String):
 		
 	new_state.enter()
 	current_state = new_state
+	logger.debug("[" + get_parent().name + "] Trasitioned state machine to " + current_state.name)

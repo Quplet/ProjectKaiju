@@ -1,16 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://cr43402jfatdw"]
+[gd_scene load_steps=10 format=3 uid="uid://cr43402jfatdw"]
 
 [ext_resource type="PackedScene" uid="uid://byr8bmofk2l0h" path="res://scenes/maps/main_map.tscn" id="1_i8r30"]
 [ext_resource type="PackedScene" uid="uid://blsedkmpi6feg" path="res://scenes/player.tscn" id="1_j5pfj"]
+[ext_resource type="AudioStream" uid="uid://bi6ym50vnuf8t" path="res://assets/sound/music/PK_Stage.wav" id="2_3yqb1"]
 [ext_resource type="PackedScene" uid="uid://d128o7shs3idx" path="res://scenes/grunt.tscn" id="2_7lp0y"]
-[ext_resource type="AudioStream" uid="uid://degsnpr35msky" path="res://assets/sound/music/PK_Stage2.wav" id="3_0c6aw"]
 [ext_resource type="Texture2D" uid="uid://dpv4dcwlembti" path="res://assets/sprites/overlay/vignette.png" id="5_7l33e"]
+[ext_resource type="Script" path="res://scripts/PlayerCamera.gd" id="5_lh2gp"]
 [ext_resource type="PackedScene" uid="uid://cj4wqk3xm2puh" path="res://scenes/player_hud.tscn" id="6_ayj2k"]
+[ext_resource type="PackedScene" uid="uid://dmxb3y1onnwlf" path="res://scenes/boss.tscn" id="7_2nbt1"]
+[ext_resource type="Script" path="res://scripts/player_hud.gd" id="8_wj7mv"]
 
 [node name="TestScene" type="Node"]
 
-[node name="dark_point_light" type="DirectionalLight2D" parent="."]
-color = Color(0, 0.129412, 0.188235, 1)
+[node name="dark_direction_light" type="DirectionalLight2D" parent="."]
+color = Color(0, 0.0313726, 0.0588235, 1)
 energy = 0.5
 blend_mode = 2
 range_z_max = 19
@@ -18,33 +21,96 @@ range_z_max = 19
 [node name="TileMap" parent="." instance=ExtResource("1_i8r30")]
 
 [node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_0c6aw")
+stream = ExtResource("2_3yqb1")
 volume_db = -20.0
 autoplay = true
 bus = &"Music"
 
 [node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
 z_index = 1
-position = Vector2(701, 199)
+position = Vector2(1095, 102)
+speed = 75.0
+
+[node name="Grunt2" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(1817, 410)
+speed = 75.0
+
+[node name="Grunt12" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(2334, 136)
+speed = 75.0
+
+[node name="Grunt13" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(3772, 385)
+speed = 75.0
+
+[node name="Grunt14" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(4643, 50)
+speed = 75.0
+
+[node name="Grunt3" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(2742, 416)
+speed = 75.0
+
+[node name="Grunt4" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(3342, 139)
+speed = 75.0
+
+[node name="Grunt5" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(3278, 86)
+speed = 75.0
+
+[node name="Grunt6" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(4199, 269)
+speed = 75.0
+
+[node name="Grunt7" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(4135, 216)
+speed = 75.0
+
+[node name="Grunt8" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(5124, 273)
+speed = 75.0
+
+[node name="Grunt9" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(5060, 220)
+speed = 75.0
+
+[node name="Grunt10" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(5130, 369)
+speed = 75.0
+
+[node name="Grunt11" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(5066, 316)
+speed = 75.0
 
 [node name="Player" parent="." instance=ExtResource("1_j5pfj")]
 z_index = 1
-position = Vector2(276, 279)
-SPEED_X = 200.0
-SPEED_Y = 75.0
+position = Vector2(289, 269)
+SPEED_X = 150.0
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
 z_index = 100
-position = Vector2(276, -21)
-offset = Vector2(0, -100)
+position = Vector2(80, -103)
+offset = Vector2(0, -200)
+zoom = Vector2(1.25, 1.25)
 position_smoothing_enabled = true
 position_smoothing_speed = 50.0
 rotation_smoothing_enabled = true
 rotation_smoothing_speed = 25.0
-
-[node name="player_hud" parent="Player/PlayerCamera" instance=ExtResource("6_ayj2k")]
-scale = Vector2(2, 2)
-transform = Transform2D(2, 0, 0, 2, 0, 0)
+script = ExtResource("5_lh2gp")
 
 [node name="Vignette" type="TextureRect" parent="Player/PlayerCamera"]
 anchors_preset = 15
@@ -57,3 +123,15 @@ offset_bottom = 483.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_7l33e")
+
+[node name="CanvasLayer" parent="Player/PlayerCamera" instance=ExtResource("6_ayj2k")]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+script = ExtResource("8_wj7mv")
+
+[node name="Boss" parent="." instance=ExtResource("7_2nbt1")]
+position = Vector2(6778, 266)
+
+[connection signal="player_heavy_signal" from="Player" to="Player/PlayerCamera" method="_on_player_player_heavy_signal"]
+[connection signal="player_landed" from="Player" to="Player/PlayerCamera" method="_on_player_player_landed"]
+[connection signal="did_heavy" from="Boss" to="Player/PlayerCamera" method="_on_boss_did_heavy"]

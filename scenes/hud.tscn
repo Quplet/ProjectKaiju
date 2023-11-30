@@ -91,5 +91,6 @@ text = "Back
 [node name="GameHUD" type="CanvasLayer" parent="."]
 visible = false
 
+[connection signal="pressed" from="MainMenu/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenu/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="OptionsMenu/BackButton" to="." method="_on_back_button_pressed"]

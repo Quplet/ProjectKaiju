@@ -47,3 +47,7 @@ func _on_options_button_pressed():
 
 func _on_back_button_pressed():
 	pop_menu()
+
+func _on_play_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/test_scene.tscn")
+	pass # Replace with function body.

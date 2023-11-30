@@ -1,11 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://d128o7shs3idx"]
+[gd_scene load_steps=23 format=3 uid="uid://d128o7shs3idx"]
 
 [ext_resource type="Script" path="res://scripts/objects/enemy.gd" id="1_83c4u"]
 [ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="1_u73y2"]
 [ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hurtbox_component.tscn" id="2_imrua"]
+[ext_resource type="Script" path="res://scripts/objects/enemy_body.gd" id="2_xd0qx"]
 [ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="3_uqhpf"]
 [ext_resource type="Shader" path="res://shaders/damagable_entity.gdshader" id="4_f312f"]
-[ext_resource type="Texture2D" uid="uid://bfwegy73s6xme" path="res://assets/sprites/enemy/gungrunt/gungrunt0.png" id="4_fgek1"]
+[ext_resource type="Texture2D" uid="uid://bj57c4qsou5i7" path="res://assets/sprites/enemy/docgrunt/idle0.png" id="5_hpjl1"]
+[ext_resource type="PackedScene" uid="uid://bqh4oevhboev5" path="res://scenes/components/attack_component.tscn" id="7_5aw6c"]
+[ext_resource type="Texture2D" uid="uid://dcos5m4epp82t" path="res://assets/sprites/enemy/docgrunt/shoot0.png" id="7_lp63f"]
+[ext_resource type="PackedScene" uid="uid://rkndo45dh6oa" path="res://scenes/components/state_machine_component.tscn" id="8_ehuim"]
+[ext_resource type="Script" path="res://scripts/states/EnemyIdle.gd" id="9_yxic5"]
+[ext_resource type="AudioStream" uid="uid://s353s4qhcy4i" path="res://assets/sound/sfx/cs325_shoot.wav" id="10_6kf65"]
+[ext_resource type="Script" path="res://scripts/states/EnemyPersue.gd" id="10_abb3v"]
+[ext_resource type="Script" path="res://scripts/states/ShootAttackState.gd" id="12_4yqvw"]
+[ext_resource type="AudioStream" uid="uid://q107vm086yie" path="res://assets/sound/sfx/cs325_grunt_death.wav" id="15_50tka"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yrrdo"]
 radius = 39.0
@@ -22,28 +31,55 @@ shader_parameter/red_shift_ammount = null
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_fgek1")
+"texture": ExtResource("5_hpjl1")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_lp63f")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
 }]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_f3jj2"]
+b = Vector2(368, 0)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iexad"]
 height = 70.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5t1n6"]
+size = Vector2(810.5, 27)
+
 [node name="Grunt" type="CharacterBody2D"]
-collision_layer = 0
+collision_layer = 512
 motion_mode = 1
 script = ExtResource("1_83c4u")
+
+[node name="death_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_50tka")
+volume_db = 5.0
+pitch_scale = 0.9
+max_polyphony = 10
+bus = &"SFX"
+
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 0.384314)
+polygon = PackedVector2Array(60, 0, 48, -8, 30, -10, -31, -10, -44, -7, -53, 0, -45, 7, -31, 9, 28, 10, 50, 7)
 
 [node name="Body" type="CharacterBody2D" parent="."]
 position = Vector2(0, -70)
 collision_layer = 0
 collision_mask = 0
 motion_mode = 1
+script = ExtResource("2_xd0qx")
 
 [node name="HealthComponent" parent="Body" node_paths=PackedStringArray("sprite") instance=ExtResource("1_u73y2")]
+MAX_HEALTH = 200.0
 sprite = NodePath("../AnimatedSprite2D")
 
 [node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "entity") instance=ExtResource("2_imrua")]
@@ -60,14 +96,62 @@ shape = SubResource("CapsuleShape2D_ylwcv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
 material = SubResource("ShaderMaterial_ybjxu")
-position = Vector2(19, 7)
-scale = Vector2(0.101908, 0.101908)
+position = Vector2(0, 7)
+scale = Vector2(0.13, 0.13)
 sprite_frames = SubResource("SpriteFrames_7h8lm")
-animation = &"idle"
+animation = &"shoot"
 
 [node name="KnockbackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("3_uqhpf")]
 entity = NodePath("../..")
 
+[node name="ShootAttackComponent" parent="Body" node_paths=PackedStringArray("entity", "attack_range_area") instance=ExtResource("7_5aw6c")]
+visible = false
+attack_animation_name = &"shoot"
+startup_duration = 1.0
+attack_duration = 5.0
+endlag_duration = 0.5
+attack_damage = 10.0
+attack_knockback = 200.0
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+
+[node name="Hitbox" type="CollisionShape2D" parent="Body/ShootAttackComponent"]
+position = Vector2(41, -40)
+shape = SubResource("SegmentShape2D_f3jj2")
+debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Body/ShootAttackComponent"]
+stream = ExtResource("10_6kf65")
+
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_iexad")
+
+[node name="AttackRangeArea" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 520
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea"]
+shape = SubResource("RectangleShape2D_5t1n6")
+
+[node name="StateMachineComponent" parent="." node_paths=PackedStringArray("initial_state") instance=ExtResource("8_ehuim")]
+initial_state = NodePath("EnemyIdleState")
+
+[node name="EnemyIdleState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity")]
+script = ExtResource("9_yxic5")
+entity = NodePath("../..")
+visibility = 500.0
+
+[node name="EnemyPersueState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity", "attack_range_area")]
+script = ExtResource("10_abb3v")
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+
+[node name="ShootAttackState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity", "attack_range_area", "attack_component")]
+script = ExtResource("12_4yqvw")
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+attack_component = NodePath("../../Body/ShootAttackComponent")
+
+[connection signal="on_death" from="Body/HealthComponent" to="." method="_on_health_component_on_death"]
+[connection signal="hit" from="Body/HurtboxComponent" to="." method="_on_hurtbox_component_hit"]

@@ -72,6 +72,7 @@ heavy_attack={
 2d_physics/layer_4="Player Floor"
 2d_physics/layer_9="Player Body"
 2d_physics/layer_10="Enemy Floor"
+2d_physics/layer_11="AttackRange"
 
 [rendering]
 

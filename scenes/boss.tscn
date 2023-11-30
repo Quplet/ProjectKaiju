@@ -1,0 +1,194 @@
+[gd_scene load_steps=27 format=3 uid="uid://dmxb3y1onnwlf"]
+
+[ext_resource type="Script" path="res://scripts/objects/boss.gd" id="1_2ogmw"]
+[ext_resource type="PackedScene" uid="uid://bfi7ete20sl7x" path="res://scenes/components/knockback_component.tscn" id="1_gr1d5"]
+[ext_resource type="PackedScene" uid="uid://bww7vq0qmirb2" path="res://scenes/components/health_component.tscn" id="2_fvlrh"]
+[ext_resource type="Script" path="res://scripts/objects/boss_body.gd" id="2_k4fmt"]
+[ext_resource type="PackedScene" uid="uid://bdnwhnysdlepu" path="res://scenes/components/hurtbox_component.tscn" id="3_08bqn"]
+[ext_resource type="Texture2D" uid="uid://dq66wq50i4t5t" path="res://assets/sprites/enemy/boss_robo/idle0.png" id="4_wdb4d"]
+[ext_resource type="PackedScene" uid="uid://bqh4oevhboev5" path="res://scenes/components/attack_component.tscn" id="5_jama5"]
+[ext_resource type="AudioStream" uid="uid://ebaeouk4bcwy" path="res://assets/sound/sfx/cs325_metalc.wav" id="6_btdos"]
+[ext_resource type="Shader" path="res://shaders/damagable_entity.gdshader" id="6_chwa8"]
+[ext_resource type="PackedScene" uid="uid://rkndo45dh6oa" path="res://scenes/components/state_machine_component.tscn" id="6_hsxc6"]
+[ext_resource type="Texture2D" uid="uid://csnxmu7swt1c5" path="res://assets/sprites/enemy/boss_robo/heavy_attack0.png" id="7_5ettp"]
+[ext_resource type="AudioStream" uid="uid://dtswirxn20vei" path="res://assets/sound/sfx/pk_kaiju_robo_1.wav" id="7_ip8to"]
+[ext_resource type="Script" path="res://scripts/states/BossPersueState.gd" id="8_4real"]
+[ext_resource type="Texture2D" uid="uid://cx5qucxrtvxc3" path="res://assets/sprites/enemy/boss_robo/hit0.png" id="8_wbdwk"]
+[ext_resource type="Script" path="res://scripts/states/BossIdle.gd" id="10_kqeph"]
+[ext_resource type="AudioStream" uid="uid://b6s5j2lx42fyn" path="res://assets/sound/sfx/cs325_woosh2.wav" id="12_e60lr"]
+[ext_resource type="Script" path="res://scripts/states/BossAttackState.gd" id="12_n3i0u"]
+[ext_resource type="AudioStream" uid="uid://bav6hi1sjppj0" path="res://assets/sound/sfx/pk_kaiju_robo_3.wav" id="13_gtuhq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oc2rg"]
+radius = 92.0
+height = 190.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vannx"]
+shader = ExtResource("6_chwa8")
+shader_parameter/red_shift_ammount = null
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hkfrr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_5ettp")
+}],
+"loop": true,
+"name": &"heavy_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_wbdwk")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_wdb4d")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0tyx8"]
+height = 190.0
+
+[sub_resource type="Gradient" id="Gradient_6g477"]
+offsets = PackedFloat32Array(0, 0.729032)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u6yqr"]
+gradient = SubResource("Gradient_6g477")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h34ka"]
+radius = 5.0
+height = 180.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pk5x7"]
+size = Vector2(810.5, 27)
+
+[node name="Boss" type="CharacterBody2D"]
+collision_layer = 512
+collision_mask = 257
+motion_mode = 1
+script = ExtResource("1_2ogmw")
+speed = 150.0
+
+[node name="Body" type="CharacterBody2D" parent="."]
+position = Vector2(0, -100)
+collision_layer = 0
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("2_k4fmt")
+
+[node name="KnockbackComponent" parent="Body" node_paths=PackedStringArray("entity") instance=ExtResource("1_gr1d5")]
+entity = NodePath("../..")
+
+[node name="HealthComponent" parent="Body" node_paths=PackedStringArray("sprite") instance=ExtResource("2_fvlrh")]
+MAX_HEALTH = 1000.0
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="HurtboxComponent" parent="Body" node_paths=PackedStringArray("health_component", "knockback_component", "entity") instance=ExtResource("3_08bqn")]
+health_component = NodePath("../HealthComponent")
+knockback_component = NodePath("../KnockbackComponent")
+entity = NodePath("../..")
+
+[node name="Hurtbox" type="CollisionShape2D" parent="Body/HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_oc2rg")
+debug_color = Color(0, 0.647059, 0.239216, 0.419608)
+
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="Body/HurtboxComponent"]
+stream = ExtResource("6_btdos")
+volume_db = 15.0
+bus = &"SFX"
+
+[node name="HurtRoar" type="AudioStreamPlayer2D" parent="Body/HurtboxComponent"]
+stream = ExtResource("7_ip8to")
+volume_db = -2.5
+pitch_scale = 0.9
+bus = &"SFX"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+material = SubResource("ShaderMaterial_vannx")
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_hkfrr")
+animation = &"idle"
+
+[node name="BodyCollision" type="CollisionShape2D" parent="Body"]
+shape = SubResource("CapsuleShape2D_0tyx8")
+
+[node name="HeavyAttackComponent" parent="Body" node_paths=PackedStringArray("entity", "attack_range_area") instance=ExtResource("5_jama5")]
+visible = false
+attack_animation_name = &"heavy_attack"
+startup_duration = 0.3
+attack_duration = 0.3
+endlag_duration = 0.5
+attack_damage = 50.0
+attack_knockback = 1000.0
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="Body/HeavyAttackComponent"]
+position = Vector2(-0.703125, 2.00493)
+scale = Vector2(1.02344, 1.00798)
+polygon = PackedVector2Array(110, -144, 126, -99, 134, -28, 122.824, 23.805, 62, 44, 54, -175, 93, -183)
+
+[node name="HeavyAttackSfx" type="AudioStreamPlayer2D" parent="Body/HeavyAttackComponent"]
+stream = ExtResource("12_e60lr")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="HeavyAttackRoar" type="AudioStreamPlayer2D" parent="Body/HeavyAttackComponent"]
+stream = ExtResource("13_gtuhq")
+volume_db = -2.5
+pitch_scale = 1.1
+bus = &"SFX"
+
+[node name="pointlight_eye" type="PointLight2D" parent="Body"]
+z_as_relative = false
+position = Vector2(110, -54)
+scale = Vector2(1.28125, 1.28125)
+color = Color(0.996078, 0.352941, 0.631373, 1)
+energy = 2.0
+texture = SubResource("GradientTexture2D_u6yqr")
+
+[node name="Floor" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_h34ka")
+
+[node name="AttackRangeArea" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea"]
+shape = SubResource("RectangleShape2D_pk5x7")
+
+[node name="StateMachineComponent" parent="." node_paths=PackedStringArray("initial_state") instance=ExtResource("6_hsxc6")]
+initial_state = NodePath("BossIdleState")
+
+[node name="BossIdleState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity")]
+script = ExtResource("10_kqeph")
+entity = NodePath("../..")
+visibility = 500.0
+
+[node name="BossPersueState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity", "attack_range_area")]
+script = ExtResource("8_4real")
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+attack_distance = 200.0
+
+[node name="BossAttackState" type="Node" parent="StateMachineComponent" node_paths=PackedStringArray("entity", "attack_range_area", "attack_component")]
+script = ExtResource("12_n3i0u")
+entity = NodePath("../..")
+attack_range_area = NodePath("../../AttackRangeArea")
+attack_component = NodePath("../../Body/HeavyAttackComponent")
+attack_distance = 200.0
+
+[connection signal="on_death" from="Body/HealthComponent" to="." method="_on_health_component_on_death"]
+[connection signal="hit" from="Body/HurtboxComponent" to="." method="_on_hurtbox_component_hit"]

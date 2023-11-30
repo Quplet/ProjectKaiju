@@ -18,6 +18,10 @@ func knockback(attack: Attack):
 	var heavy_attack_component: AttackComponent = get_node_or_null("../HeavyAttackComponent")
 	if net_force > 300 and heavy_attack_component != null and heavy_attack_component.is_attack_active():
 		heavy_attack_component.end_attack()
+		
+	var shoot_attack_component: AttackComponent = get_node_or_null("../ShootAttackComponent")
+	if net_force > 100 and shoot_attack_component != null and shoot_attack_component.is_attack_active():
+		shoot_attack_component.end_attack()
 
 	entity.velocity += (entity.global_position - attack.attack_position).normalized() * net_force
 

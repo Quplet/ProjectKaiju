@@ -5,6 +5,8 @@ class_name HurtboxComponent
 @export var knockback_component: KnockbackComponent
 @export var entity: CharacterBody2D
 
+signal hit(attack: Attack)
+
 var hit_sounds: Array[AudioStreamPlayer2D]
 
 var logger: Log = Util.LOGGER
@@ -20,6 +22,8 @@ func damage(attack: Attack):
 	
 	if knockback_component:
 		knockback_component.knockback(attack)
+	
+	hit.emit(attack)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
