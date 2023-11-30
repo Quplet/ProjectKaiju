@@ -120,8 +120,10 @@ position = Vector2(41, -40)
 shape = SubResource("SegmentShape2D_f3jj2")
 debug_color = Color(1, 0, 0, 0.419608)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Body/ShootAttackComponent"]
+[node name="shoot_sfx" type="AudioStreamPlayer2D" parent="Body/ShootAttackComponent"]
 stream = ExtResource("10_6kf65")
+volume_db = -5.0
+bus = &"SFX"
 
 [node name="Floor" type="CollisionShape2D" parent="."]
 rotation = 1.5708

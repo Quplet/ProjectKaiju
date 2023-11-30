@@ -9,7 +9,7 @@ signal current_health(player_health)
 
 var red_shift: float = 0.0
 var red_shift_decrease_rate: float = 1.0
-@export var health: float
+var health: float
 
 func damage(attack: Attack):
 	health -= attack.damage

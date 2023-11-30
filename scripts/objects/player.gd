@@ -34,6 +34,12 @@ func _physics_process(_delta):
 		if (not direction_y) or $Body.is_attacking() or $Body.in_hitstun(): 
 			velocity.y = move_toward(velocity.y, 0, SPEED_Y/5.0)
 		
+		#jump-cancel attacks at the behest of a friend :3
+		if Input.is_action_just_pressed("jump"):
+				$Body.velocity.y = JUMP_VELOCITY
+				player_in_air=true
+				$JumpSfx.play()
+				$JumpRoar.play()
 
 		if !$Body.is_attacking() and !$Body.in_hitstun():
 			if direction_y:
@@ -46,12 +52,6 @@ func _physics_process(_delta):
 				velocity.x = direction_x * SPEED_X
 				$Body.flip_body(direction_x)
 				play_ground_sfx()
-	
-			if Input.is_action_just_pressed("jump"):
-				$Body.velocity.y = JUMP_VELOCITY
-				player_in_air=true
-				$JumpSfx.play()
-				$JumpRoar.play()
 
 			#if velocity.x == 0 and velocity.y == 0:
 			#	$Body.switch_animation("idle")
@@ -82,4 +82,9 @@ func play_ground_sfx():
 
 func _on_health_component_current_health(player_health):
 	emit_signal("player_health",player_health)
+	pass # Replace with function body.
+
+
+func _on_health_component_on_death():
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
 	pass # Replace with function body.

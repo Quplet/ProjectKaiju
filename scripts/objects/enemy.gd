@@ -24,7 +24,7 @@ func _process(delta: float):
 			$Body.switch_animation("idle")
 	
 func _on_health_component_on_death():
-	$death_sfx.play()
+	$death_sfx.play(0)
 	if ($death_sfx.finished):
 		print("audio fin")
 		get_tree().queue_delete(self)

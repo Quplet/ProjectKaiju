@@ -243,3 +243,4 @@ shape = SubResource("RectangleShape2D_h7o5e")
 
 [connection signal="hit" from="Body/HurtboxComponent" to="Body" method="_on_hurtbox_component_hit"]
 [connection signal="current_health" from="Body/HealthComponent" to="." method="_on_health_component_current_health"]
+[connection signal="on_death" from="Body/HealthComponent" to="." method="_on_health_component_on_death"]

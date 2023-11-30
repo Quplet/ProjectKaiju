@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbljuasuki7pu"]
+[gd_scene load_steps=7 format=3 uid="uid://dbljuasuki7pu"]
 
 [ext_resource type="Script" path="res://scripts/HUD.gd" id="1_62db1"]
 [ext_resource type="Texture2D" uid="uid://dh4q7gt6suex0" path="res://assets/misc/title.png" id="2_r04io"]
 [ext_resource type="FontFile" uid="uid://dkk2lnbhyysgf" path="res://assets/fonts/NevisBold-KGwl.ttf" id="3_dcqy5"]
+[ext_resource type="AudioStream" uid="uid://b2p8gblpy4y1v" path="res://assets/sound/sfx/cs325_ui_confirm.wav" id="4_b2ayk"]
+[ext_resource type="AudioStream" uid="uid://dnftuf1v8344s" path="res://assets/sound/sfx/cs325_ui_cancel.wav" id="5_jq2b7"]
+[ext_resource type="AudioStream" uid="uid://cnyneni6y7vxx" path="res://assets/sound/sfx/cs325_cat.wav" id="6_aggf1"]
 
 [node name="HUD" type="Node"]
 script = ExtResource("1_62db1")
@@ -71,6 +74,55 @@ theme_override_font_sizes/font_size = 50
 text = "Options"
 horizontal_alignment = 1
 
+[node name="Master Volume" type="Button" parent="OptionsMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1016.0
+offset_top = -515.0
+offset_right = -778.0
+offset_bottom = -460.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_dcqy5")
+theme_override_font_sizes/font_size = 32
+text = "Master Volume"
+
+[node name="Music" type="Button" parent="OptionsMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1014.0
+offset_top = -383.0
+offset_right = -776.0
+offset_bottom = -328.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_dcqy5")
+theme_override_font_sizes/font_size = 32
+text = "Music"
+
+[node name="SFX" type="Button" parent="OptionsMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1015.0
+offset_top = -447.0
+offset_right = -777.0
+offset_bottom = -392.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_dcqy5")
+theme_override_font_sizes/font_size = 32
+text = "SFX
+"
+
 [node name="BackButton" type="Button" parent="OptionsMenu"]
 anchors_preset = 3
 anchor_left = 1.0
@@ -88,9 +140,49 @@ theme_override_font_sizes/font_size = 32
 text = "Back
 "
 
+[node name="HSlider_MasterVolume" type="HSlider" parent="OptionsMenu"]
+offset_left = 383.0
+offset_top = 130.0
+offset_right = 960.0
+offset_bottom = 197.0
+min_value = -30.0
+max_value = 0.0
+
+[node name="HSlider_Music" type="HSlider" parent="OptionsMenu"]
+offset_left = 384.0
+offset_top = 260.0
+offset_right = 960.0
+offset_bottom = 327.0
+min_value = -30.0
+max_value = 0.0
+
+[node name="HSlider_SFX" type="HSlider" parent="OptionsMenu"]
+offset_left = 384.0
+offset_top = 197.0
+offset_right = 960.0
+offset_bottom = 264.0
+min_value = -30.0
+max_value = 0.0
+
+[node name="ui_confirm" type="AudioStreamPlayer" parent="OptionsMenu"]
+stream = ExtResource("4_b2ayk")
+bus = &"SFX"
+
+[node name="ui_cancel" type="AudioStreamPlayer" parent="OptionsMenu"]
+stream = ExtResource("5_jq2b7")
+bus = &"SFX"
+
+[node name="cat" type="AudioStreamPlayer" parent="OptionsMenu"]
+stream = ExtResource("6_aggf1")
+volume_db = 10.0
+bus = &"SFX"
+
 [node name="GameHUD" type="CanvasLayer" parent="."]
 visible = false
 
 [connection signal="pressed" from="MainMenu/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="MainMenu/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="OptionsMenu/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="OptionsMenu/HSlider_MasterVolume" to="." method="_on_h_slider_master_volume_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/HSlider_Music" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/HSlider_SFX" to="." method="_on_h_slider_sfx_value_changed"]
