@@ -78,6 +78,8 @@ collision_layer = 8
 collision_mask = 513
 motion_mode = 1
 script = ExtResource("1_6whxk")
+SPEED_X = 2000.0
+SPEED_Y = 750.0
 
 [node name="Shadow" type="Polygon2D" parent="."]
 color = Color(0, 0, 0, 0.384314)

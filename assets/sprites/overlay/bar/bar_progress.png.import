@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://by87q7r3nfbw2"
-path="res://.godot/imported/fg_fore.png-908bdee1de7bd6761af583e509e89a09.ctex"
+uid="uid://1wt68c2afds"
+path="res://.godot/imported/bar_progress.png-0b8ba92a53a1e819ece5c8c451d41716.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/textures/map/fg_fore.png"
-dest_files=["res://.godot/imported/fg_fore.png-908bdee1de7bd6761af583e509e89a09.ctex"]
+source_file="res://assets/sprites/overlay/bar/bar_progress.png"
+dest_files=["res://.godot/imported/bar_progress.png-0b8ba92a53a1e819ece5c8c451d41716.ctex"]
 
 [params]
 

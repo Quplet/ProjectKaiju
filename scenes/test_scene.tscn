@@ -1,17 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://cr43402jfatdw"]
+[gd_scene load_steps=7 format=3 uid="uid://cr43402jfatdw"]
 
+[ext_resource type="PackedScene" uid="uid://byr8bmofk2l0h" path="res://scenes/maps/main_map.tscn" id="1_i8r30"]
 [ext_resource type="PackedScene" uid="uid://blsedkmpi6feg" path="res://scenes/player.tscn" id="1_j5pfj"]
-[ext_resource type="PackedScene" uid="uid://c5lrnmycfaa5x" path="res://scenes/maps/test_map.tscn" id="1_r6hih"]
 [ext_resource type="PackedScene" uid="uid://d128o7shs3idx" path="res://scenes/grunt.tscn" id="2_7lp0y"]
 [ext_resource type="AudioStream" uid="uid://degsnpr35msky" path="res://assets/sound/music/PK_Stage2.wav" id="3_0c6aw"]
 [ext_resource type="Texture2D" uid="uid://dpv4dcwlembti" path="res://assets/sprites/overlay/vignette.png" id="5_7l33e"]
+[ext_resource type="PackedScene" uid="uid://cj4wqk3xm2puh" path="res://scenes/player_hud.tscn" id="6_ayj2k"]
 
 [node name="TestScene" type="Node"]
 
-[node name="TestMap" parent="." instance=ExtResource("1_r6hih")]
+[node name="dark_point_light" type="DirectionalLight2D" parent="."]
+color = Color(0, 0.129412, 0.188235, 1)
+energy = 0.5
+blend_mode = 2
+range_z_max = 19
 
-[node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
-position = Vector2(788, 382)
+[node name="TileMap" parent="." instance=ExtResource("1_i8r30")]
 
 [node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_0c6aw")
@@ -19,18 +23,31 @@ volume_db = -20.0
 autoplay = true
 bus = &"Music"
 
+[node name="Grunt" parent="." instance=ExtResource("2_7lp0y")]
+z_index = 1
+position = Vector2(701, 199)
+
 [node name="Player" parent="." instance=ExtResource("1_j5pfj")]
-position = Vector2(321, 402)
+z_index = 1
+position = Vector2(276, 279)
+SPEED_X = 200.0
+SPEED_Y = 75.0
 
 [node name="PlayerCamera" type="Camera2D" parent="Player"]
+z_index = 100
 position = Vector2(276, -21)
 offset = Vector2(0, -100)
 position_smoothing_enabled = true
-position_smoothing_speed = 25.0
+position_smoothing_speed = 50.0
 rotation_smoothing_enabled = true
 rotation_smoothing_speed = 25.0
 
+[node name="player_hud" parent="Player/PlayerCamera" instance=ExtResource("6_ayj2k")]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
 [node name="Vignette" type="TextureRect" parent="Player/PlayerCamera"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

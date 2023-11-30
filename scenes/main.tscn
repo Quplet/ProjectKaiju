@@ -1,7 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://lnfonj1ufnd3"]
+[gd_scene load_steps=3 format=3 uid="uid://lnfonj1ufnd3"]
 
 [ext_resource type="PackedScene" uid="uid://dbljuasuki7pu" path="res://scenes/hud.tscn" id="1_agcuf"]
+[ext_resource type="AudioStream" uid="uid://tj6jbl7i7d1w" path="res://assets/sound/music/PK_Menu.wav" id="1_su6up"]
 
 [node name="Main" type="Node"]
+
+[node name="Track2Bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_su6up")
+volume_db = -30.0
+autoplay = true
+bus = &"Music"
 
 [node name="HUD" parent="." instance=ExtResource("1_agcuf")]
